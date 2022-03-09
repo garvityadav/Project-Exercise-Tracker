@@ -11,7 +11,7 @@ app.use(express.static("public"));
 
 //mongoose connection
 const mongoose = require("mongoose");
-const mongooseURI = process.env["MongooseURI"];
+const mongooseURI = process.env["MongooseURI"]; //add your own mongo connection
 mongoose.connect(mongooseURI);
 
 //Schemas
