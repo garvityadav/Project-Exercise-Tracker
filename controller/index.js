@@ -11,7 +11,7 @@ const createUser=async (req,res)=>{
     if(!doc){
       return res.send({"success":false})
     }
-    res.send({'username': doc.username, 'id':doc._id})
+    res.send({'username': doc.username, '_id':doc._id})
   }
   catch(err){
     console.log(err)
