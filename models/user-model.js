@@ -21,7 +21,6 @@ const schema = new mongoose.Schema({
     },
     log:{
       type: [logSchema],
-      default:undefined
     }
   });
  
