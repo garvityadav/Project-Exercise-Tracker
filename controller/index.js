@@ -1,49 +1,22 @@
-const Model = require('../models/user-model');
-
+const Model = require("../models/user-model");
+const asyncWrapper  = require('../middleware/async-wrapper');
+const {CustomAPIError} = require('../custom-error/custom-error');
 /*
 to register new user:
 */
-const createUser=async (req,res)=>{
-  try{
-    const userName = req.body.username;
-    console.log(userName);
-    const doc = await Model.create({username:userName});
-    if(!doc){
-      return res.send({"success":false})
-    }
-    res.send({'username': doc.username, '_id':doc._id})
-  }
-  catch(err){
-    console.log(err)
-  }
-  
-}
-//   app.post(`/api/users`, (req, res) => {
-//     newUserModel.findOne({ username: newuser }, (err, data) => {
-//       if (err) throw err;
-//       if (!data) {
-//         let newUserDoc = new newUserModel({ username: newuser });
-//         newUserDoc.save((err, data) => {
-//           if (err) throw err;
-//           res.json({ username: data.username, _id: data._id });
-//           // console.log(`this is the data id in /api/users :\n ${data._id}`);
-//           return data;
-//         });
-//       }
-//       //if the id already exist , find it and response
-//       else {
-//         newUserModel.findOne({ username: newuser }, (err, data) => {
-//           if (err) throw err;
-//           res.json({ username: data.username, _id: data._id });
-//         });
-//       }
-//     });
-//   });
+const createUser = asyncWrapper(async (req, res) => {
+    const username = req.body.username;
+    const doc = await Model.create({ username });
+    res.status(200).send({ username: doc.username, _id: doc._id });
+});
+
+const displayAllUsers = asyncWrapper(async (req, res) => {
+    const doc = await Model.find({},' username , _id');
+    res.status(200).send(doc);
+});
 
 
 
-
-  
 // /*
 // to get all users;
 // */
@@ -58,10 +31,6 @@ const createUser=async (req,res)=>{
 //     res.send(json);
 //   });
 // });
-
-
-
-
 
 // /*
 //  * test case 2 : excercise
@@ -166,5 +135,4 @@ const createUser=async (req,res)=>{
 //   });
 // });
 
-
-module.exports = {createUser}
+module.exports = { createUser,displayAllUsers };
