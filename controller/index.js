@@ -28,8 +28,9 @@ const updateUser = asyncWrapper(async (req,res,next)=>{
     if(!logs){
        return next(CustomAPIError(`no user for this id: ${id}`,404))
     }
-    const user = await Model.findById(id)
-    res.status(200).send(user);
+    const user = await Model.findById(id);
+    console.log(user)
+    res.status(200).send({_id:user._id,username:user.username,description:description,duration:duration,date:date});
 });
 
 const getUserLogs = asyncWrapper(async(req,res)=>{
