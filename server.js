@@ -24,10 +24,14 @@ app.use(noRoutes);
 /*I wanted to connect my database first 
 and then the server*/
 const start= async ()=>{
-  await connectDB(url);
-  app.listen(process.env.PORT || 3000,
-  console.log(`Your app is listening on port:${port}...`)
-  );
+  try{
+    await connectDB(url);
+    app.listen(process.env.PORT || 3000,
+      console.log(`Your app is listening on port:${port}...`)
+      );
+    }catch(err){
+      console.log(err);
+    }
   
 }
 
