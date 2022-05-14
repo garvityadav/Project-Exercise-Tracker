@@ -25,7 +25,7 @@ const updateUser = asyncWrapper(async (req, res, next) => {
   const count = user.log.length + 1;
   let { description, duration, date } = req.body;
   duration = await parseInt(duration);
-  date = await getDate(date);
+  date = await getDate(date).toString();
   const logs = await Model.findByIdAndUpdate(
     id,
     { $push: { log: { description, duration, date } }, count: count },
