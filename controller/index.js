@@ -22,7 +22,7 @@ const displayAllUsers = asyncWrapper(async (req, res) => {
 const updateUser = asyncWrapper(async (req, res, next) => {
   const id = req.params._id;
   const user = await Model.findById(id);
-  const count = user.log.length +1 ;
+  const count = user.log.length + 1;
   let { description, duration, date } = req.body;
   duration = await parseInt(duration);
   date = await getDate(date);
@@ -35,27 +35,48 @@ const updateUser = asyncWrapper(async (req, res, next) => {
     return next(CustomAPIError(`no user for this id: ${id}`, 404));
   }
 
-  res
-    .status(200)
-    .send({
-      _id: user._id,
-      username: user.username,
-      description: description,
-      duration: duration,
-      date: date,
-    });
+  res.status(200).send({
+    _id: user._id,
+    username: user.username,
+    description: description,
+    duration: duration,
+    date: date,
+  });
 });
 
 const getUserLogs = asyncWrapper(async (req, res, next) => {
   const id = req.params._id;
-  const {from,to,limit} = req.query;
-
+  let { from, to, limit } = req.query;
+  if (!from) {
+    from = await new Date(0).toDateString();
+  }
+  if (!to) {
+    to = await new Date().toDateString();
+  }
   let user = await Model.findById(id);
-  console.log(user.log)
+  let length = user.log.length;
+  if (!limit) {
+    limit = length;
+  }
+  let log = user.log;
+  log = log.filter((log) => {
+    if (
+      from &&
+      new Date(log.date).getTime() >= new Date(from).getTime() &&
+      to &&
+      new Date(log.date).getTime() <= new Date(to).getTime()
+    ) {
+      return true;
+    }
+  });
+  log = log.slice(0, limit);
+
   if (!user) {
     return next(CustomAPIError(`no user for this id: ${id}`, 404));
   }
-  res.status(200).send(user);
+  res
+    .status(200)
+    .send({ _id: id, username: user.username, count: limit, log: log });
 });
 
 module.exports = { createUser, displayAllUsers, updateUser, getUserLogs };
