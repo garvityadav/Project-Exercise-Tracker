@@ -1,4 +1,6 @@
 require("dotenv").config();
+// const port = process.env['PORT']
+// const url = process.env['MONGO_URI']
 const express = require("express");
 const app = express();
 const cors = require("cors");
