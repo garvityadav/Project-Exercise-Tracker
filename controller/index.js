@@ -4,9 +4,9 @@ const { CustomAPIError } = require("../custom-error/custom-error");
 
 function getDate(date) {
   if (!date) {
-    return new Date().toDateString();
+    return new Date().toDateString().toString();
   }
-  return new Date(date).toDateString();
+  return new Date(date).toDateString().toString();
 }
 const createUser = asyncWrapper(async (req, res) => {
   const username = req.body.username;
@@ -25,7 +25,7 @@ const updateUser = asyncWrapper(async (req, res, next) => {
   const count = user.log.length + 1;
   let { description, duration, date } = req.body;
   duration = await parseInt(duration);
-  date = await getDate(date).toString();
+  date = await getDate(date)
   const logs = await Model.findByIdAndUpdate(
     id,
     { $push: { log: { description, duration, date } }, count: count },
