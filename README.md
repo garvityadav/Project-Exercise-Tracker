@@ -15,3 +15,11 @@ This was the project I made for the [FreeCodeCamp](https://www.freecodecamp.org)
   3) Create a new .env file in the main directory and add the fields which are there in sample.env.
   4) Start the project by writing ```npm start```.
   5) Head over to http://localhost:[port]/ to see the homepage
+
+
+### Things you can do
+  1. Create a new user 
+  2. Head over to /api/users to view all the users which are there in the db
+  3. Head over to /api/users/:id/logs to view all the logs of the users.
+  4. You can add activities in the activity form
+  5. You can go to /api/users/:id/logs?from=2021&to=2022&limit=3 , where ```from``` is the starting date from where you will see the activities , ```to``` is the date till which you can see your activities and ```limit``` are the number of activities on a single page.
