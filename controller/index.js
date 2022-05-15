@@ -4,9 +4,9 @@ const { CustomAPIError } = require("../custom-error/custom-error");
 
 function getDate(date) {
   if (!date) {
-    return new Date().toDateString().toString();
+    return new Date().toDateString()
   }
-  return new Date(date).toDateString().toString();
+  return new Date(date).toDateString()
 }
 const createUser = asyncWrapper(async (req, res) => {
   const username = req.body.username;
@@ -34,8 +34,8 @@ const updateUser = asyncWrapper(async (req, res, next) => {
   if (!logs) {
     return next(CustomAPIError(`no user for this id: ${id}`, 404));
   }
-
-  res.status(200).send({
+console.log(typeof(date))
+  res.status(200).json({
     _id: user._id,
     username: user.username,
     description: description,
@@ -54,6 +54,9 @@ const getUserLogs = asyncWrapper(async (req, res, next) => {
     to = await new Date().toDateString();
   }
   let user = await Model.findById(id);
+  if (!user) {
+    return next(CustomAPIError(`no user for this id: ${id}`, 404));
+  }
   let length = user.log.length;
   if (!limit) {
     limit = length;
@@ -70,13 +73,13 @@ const getUserLogs = asyncWrapper(async (req, res, next) => {
     }
   });
   log = log.slice(0, limit);
-
-  if (!user) {
-    return next(CustomAPIError(`no user for this id: ${id}`, 404));
+  let newArr = []
+  for(let i=0;i<limit;i++){
+    newArr.push({description:log[i].description,duration:log[i].duration,date:log[i].date})
   }
   res
     .status(200)
-    .send({ _id: id, username: user.username, count: limit, log: log });
+    .send({ _id: id, username: user.username, count: limit, log:newArr });
 });
 
 module.exports = { createUser, displayAllUsers, updateUser, getUserLogs };
