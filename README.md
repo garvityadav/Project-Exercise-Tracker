@@ -23,3 +23,8 @@ This was the project I made for the [FreeCodeCamp's](https://www.freecodecamp.or
   3. Head over to /api/users/:id/logs to view all the logs of the users.
   4. You can add activities in the activity form
   5. You can go to /api/users/:id/logs?from=2021&to=2022&limit=3 , where ```from``` is the starting date from where you will see the activities , ```to``` is the date till which you can see your activities and ```limit``` are the number of activities on a single page.
+
+
+#### Created 
+  Created on 08 MAR 2022
+  Current update-> 15 MAY 2022
