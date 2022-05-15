@@ -1,6 +1,6 @@
 ## [Exercise Tracker](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/exercise-tracker)
 
-This was the project I made for the [FreeCodeCamp](https://www.freecodecamp.org).
+This was the project I made for the [FreeCodeCamp's](https://www.freecodecamp.org) backend certificate.
 
 
 ### What this project do?
